@@ -10,7 +10,7 @@ import (
 
 type Resource struct {
 	//Headers     http.Header
-	Response interface{}
+	Response *http.Response
 	Raw      string
 }
 

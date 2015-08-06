@@ -2,14 +2,14 @@ package zego
 
 import (
 	"encoding/json"
+	"strings"
 )
 
 type TicketArray struct {
 	Count         int    `json:"count"`
-	Created       string `json:"created"`
 	Next_page     string `json:"next_page"`
 	Previous_page string `json:"previous_page"`
-	Tickets       []Ticket
+	Tickets       []Ticket `json:"tickets"`
 }
 
 type SingleTicket struct {
@@ -85,15 +85,19 @@ func (a Auth) GetTicket(ticket_id string) (*SingleTicket, error) {
 
 }
 
-func (a Auth) GetMultipleTickets(ticket_id string) (*Resource, error) {
+func (a Auth) GetMultipleTickets(ticket_ids []string) (*TicketArray, error) {
 
-	path := "/tickets/" + ticket_id + ".json"
+	TicketStruct := &TicketArray{}
+
+	path := "/tickets/show_many.json?ids=" + strings.Join(ticket_ids, ",")
 	resource, err := api(a, "GET", path, "")
 	if err != nil {
 		return nil, err
 	}
 
-	return resource, nil
+	json.Unmarshal([]byte(resource.Raw), TicketStruct)
+
+	return TicketStruct, nil
 
 }
 

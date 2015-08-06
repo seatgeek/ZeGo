@@ -1,8 +1,8 @@
-
 package zego
 
-
-
+import (
+    "encoding/json"
+)
 
 type Search_Results struct {
     Count            int `json:"count"`
@@ -21,8 +21,9 @@ type Result struct {
     Url              string `json:"url"`
 }
 
-
 func (a Auth) Search(query string) (*Resource, error) {
+
+    ResultsStruct := &Search_Results{}
 
     path := "/search.json?query=" + query
     resource, err := api(a, "GET", path, "")
@@ -30,7 +31,9 @@ func (a Auth) Search(query string) (*Resource, error) {
         return nil, err
     }
 
-    return resource, nil
+    json.Unmarshal([]byte(resource.Raw), ResultsStruct)
+
+    return ResultsStruct, nil
 
 }
 

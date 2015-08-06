@@ -21,7 +21,7 @@ type Result struct {
     Url              string `json:"url"`
 }
 
-func (a Auth) Search(query string) (*Resource, error) {
+func (a Auth) Search(query string) (*ResultsStruct, error) {
 
     ResultsStruct := &Search_Results{}
 

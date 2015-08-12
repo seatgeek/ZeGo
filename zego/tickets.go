@@ -6,14 +6,16 @@ import (
 )
 
 type TicketArray struct {
-	Count         int    `json:"count"`
-	Next_page     string `json:"next_page"`
-	Previous_page string `json:"previous_page"`
+	Count         int      `json:"count"`
+	Next_page     string   `json:"next_page"`
+	Previous_page string   `json:"previous_page"`
 	Tickets       []Ticket `json:"tickets"`
 }
 
 type SingleTicket struct {
-	Ticket *Ticket `json:"ticket"`
+	Ticket      *Ticket `json:"ticket"`
+	Error       string  `json:"error"`
+	Description string  `json:"description"`
 }
 
 type Ticket struct {
